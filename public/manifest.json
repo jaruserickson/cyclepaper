@@ -1,22 +1,22 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "cyclepaper",
+  "name": "reddit wallpaper cyclist",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "logo.png",
+      "type": "image/png",
+      "sizes": "256x256"
     },
     {
-      "src": "logo192.png",
+      "src": "logo-dark.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "256x256"
     },
     {
-      "src": "logo512.png",
+      "src": "logo-light.png",
       "type": "image/png",
-      "sizes": "512x512"
-    }	    
+      "sizes": "256x256"
+    }
   ],
   "start_url": ".",
   "display": "standalone",

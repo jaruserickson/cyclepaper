@@ -24,7 +24,7 @@ class App extends React.Component {
             <SubRedditCard selectSubReddit={this.select}>{subReddit}</SubRedditCard>
           ))
         }
-        <button></button>
+        {/* <button></button> */}
       </div>
     );
   }

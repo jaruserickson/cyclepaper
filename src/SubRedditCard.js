@@ -15,7 +15,7 @@ export default class SubRedditCard extends React.Component {
 
     render() {
         return (
-            <div className={'w-third-ns pv3 ma1 br2 flex justify-center ' + this.state.buttonColor} onClick={this.select}>
+            <div className={'no-drag w-third-ns pv3 ma1 br2 flex justify-center ' + this.state.buttonColor} onClick={this.select}>
                 <span className="f6 helvetica">r/{this.props.children}</span>
             </div>
         )

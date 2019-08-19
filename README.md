@@ -1,4 +1,6 @@
-# cyclepaper
+<p align="center">
+<a href="#"><img src='public/spoticast.png' height='200'></a>
+</p>
 
 Multiplatform subreddit wallpaper cyclist. Built with NodeJS and Tachyons on electron.
 
