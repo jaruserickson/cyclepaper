@@ -20,7 +20,6 @@ class App extends React.Component {
     }
   
     render() {
-        console.log(this.state)
         return (
             <div className="bg-near-black white vw-100 vh-100 flex flex-column items-center justify-center">
                 <span className="f2-ns tracked-tight helvetica pa3">cyclepaper</span>
