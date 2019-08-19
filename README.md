@@ -1,5 +1,5 @@
 <p align="center">
-<a href="#"><img src='public/cyclepaper.png' height='100'></a>
+<a href="#"><img src='public/cyclepaper.png' height='150'></a>
 </p>
 
 Multiplatform subreddit wallpaper cyclist. Built with NodeJS and Tachyons on electron.
