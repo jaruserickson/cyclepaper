@@ -1,5 +1,6 @@
 import React from 'react';
-import SubRedditCard from './SubRedditCard';
+import { Button } from 'semantic-ui-react'
+import IntervalSelector from './IntervalSelector';
 
 class App extends React.Component {
     constructor(props) {
@@ -22,13 +23,19 @@ class App extends React.Component {
     render() {
         return (
             <div className="bg-near-black white vw-100 vh-100 flex flex-column items-center justify-center">
-                <span className="f2-ns tracked-tight helvetica pa3">cyclepaper</span>
+                <span className="f2-ns tracked-tight helvetica pa4">cyclepaper</span>
                 {
                     Object.keys(this.state.sources).map((subReddit) => (
-                        <SubRedditCard selectSubReddit={this.select}>{subReddit}</SubRedditCard>
+                        <div className="ma1">
+                            <Button 
+                            onClick={() => this.select(subReddit)} 
+                            active={this.state.sources[subReddit]}>
+                                {subReddit}
+                            </Button>
+                        </div>
                     ))
                 }
-                {/* <button></button> */}
+                <IntervalSelector />
             </div>
         );
     }
