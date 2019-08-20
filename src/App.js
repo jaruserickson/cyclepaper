@@ -10,7 +10,9 @@ class App extends React.Component {
                 'wallpapers': false,
                 'wallpaper': false,
                 'multiwall': false
-            }
+            },
+            time: 30,
+            timeUnit: "mins"
         }
     }
 
@@ -35,7 +37,10 @@ class App extends React.Component {
                         </div>
                     ))
                 }
-                <IntervalSelector />
+                <IntervalSelector 
+                    setTime={(time) => this.setState({ time: time })}
+                    setTimeUnit={(timeUnit) => this.setState({ timeUnit: timeUnit })} 
+                />
             </div>
         );
     }
