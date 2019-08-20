@@ -20,4 +20,4 @@ jobs:
     - name: npm install, build with webpack
       run: |
         npm install
-        webpack
+        npm run webpack
