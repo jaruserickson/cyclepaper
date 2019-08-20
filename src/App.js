@@ -30,6 +30,7 @@ class App extends React.Component {
                     Object.keys(this.state.sources).map((subReddit) => (
                         <div className="ma1">
                             <Button 
+                            toggle
                             onClick={() => this.select(subReddit)} 
                             active={this.state.sources[subReddit]}>
                                 {subReddit}

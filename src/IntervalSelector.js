@@ -16,10 +16,10 @@ export default function IntervalSelector({ setTime, setTimeUnit }) {
                     defaultValue="30" 
                     icon="clock" 
                     onChange={({ target: { value }}) => setDisplayTime(value) || (isValidTime(value) && setTime(value))} />
-                <Select className="ml1 fluid w4" placeholder='Minutes' options={[
+                <Select className="ml1 fluid w4" defaultValue='mins' options={[
                     { key: 'mins', value: 'mins', text: 'Minutes' },
                     { key: 'hrs', value: 'hrs', text: 'Hours' },
-                    { key: 'days', value: 'days', text: 'Days' },
+                    { key: 'days', value: 'days', text: 'Days' }
                 ]} onChange={(e, { value }) => setTimeUnit(value)} />
             </div>
         </div>
