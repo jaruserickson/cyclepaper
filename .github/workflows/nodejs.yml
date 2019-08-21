@@ -18,6 +18,12 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: npm install, build with webpack
+      env:
+        CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+        REDDIT_USERNAME: ${{ secrets.REDDIT_USERNAME }}
+        REDDIT_PASSWORD: ${{ secrets.REDDIT_PASSWORD }}
       run: |
         npm install
         npm run webpack
+      
