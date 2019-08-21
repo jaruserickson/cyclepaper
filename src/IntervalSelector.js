@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Input, Select } from 'semantic-ui-react'
 
-const isValidTime = (time) => !/[a-z]/i.test(time) && time.length > 0
+const isValidTime = (time) => /\d/i.test(time) && time.length > 0
 
 export default function IntervalSelector({ setTime, setTimeUnit }) {
     const [displayTime, setDisplayTime] = useState('30')

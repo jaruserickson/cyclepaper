@@ -4,12 +4,15 @@
   "private": true,
   "main": "public/main.js",
   "dependencies": {
+    "axios": "^0.19.0",
+    "cheerio": "^1.0.0-rc.3",
     "electron": "^6.0.2",
     "electron-json-storage": "^4.1.7",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-scripts": "3.1.1",
-    "semantic-ui-react": "^0.87.3"
+    "semantic-ui-react": "^0.87.3",
+    "wallpaper": "^4.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
