@@ -3,6 +3,7 @@ import { Button } from 'semantic-ui-react'
 import IntervalSelector from './IntervalSelector'
 import { setWallpaperFromSources } from './wallpaperService'
 
+
 class App extends React.Component {
     constructor(props) {
         super(props)
@@ -15,13 +16,12 @@ class App extends React.Component {
             time: 30,
             timeUnit: "mins"
         }
-        this.handleTimeChange()
     }
 
-    select = (subReddit) => {
+    select = (subReddit, cb) => {
         const copySources = {...this.state.sources}
         copySources[subReddit] = !this.state.sources[subReddit]
-        this.setState({ sources: copySources })
+        this.setState({ sources: copySources }, cb)
     }
     
     getMultiplier = () => {
@@ -44,20 +44,20 @@ class App extends React.Component {
             <div className="bg-near-black white vw-100 vh-100 flex flex-column items-center justify-center">
                 <span className="f2-ns tracked-tight helvetica pa4">cyclepaper</span>
                 {
-                    Object.keys(this.state.sources).map((subReddit) => (
+                    Object.keys(this.state.sources).map((subReddit) => 
                         <div className="ma1">
                             <Button 
                             toggle
-                            onClick={() => this.select(subReddit)} 
+                            onClick={() => this.select(subReddit, () => this.handleTimeChange())} 
                             active={this.state.sources[subReddit]}>
                                 {subReddit}
                             </Button>
                         </div>
-                    ))
+                    )
                 }
                 <IntervalSelector 
-                    setTime={(time) => this.setState({ time: parseInt(time) }) && this.handleTimeChange()}
-                    setTimeUnit={(timeUnit) => this.setState({ timeUnit: timeUnit }) && this.handleTimeChange()} 
+                    setTime={(time) => this.setState({ time: parseInt(time) }, this.handleTimeChange)}
+                    setTimeUnit={(timeUnit) => this.setState({ timeUnit: timeUnit }, this.handleTimeChange)} 
                 />
             </div>
         );

@@ -12,6 +12,7 @@
     "react-dom": "^16.9.0",
     "react-scripts": "3.1.1",
     "semantic-ui-react": "^0.87.3",
+    "snoowrap": "^1.19.0",
     "wallpaper": "^4.4.1"
   },
   "scripts": {
@@ -19,8 +20,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron-start": "electron .",
-    "webpack": "webpack"
+    "electron-start": "electron ."
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -38,6 +38,7 @@
     ]
   },
   "devDependencies": {
-    "electron-builder": "^21.2.0"
+    "electron-builder": "^21.2.0",
+    "webpack": "^4.39.1"
   }
 }
