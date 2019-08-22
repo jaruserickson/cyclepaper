@@ -4,15 +4,16 @@
 /node_modules
 /.pnp
 .pnp.js
-/server/*.png
-/server/*.jpg
-/server/*.jpeg
+*.png
+*.jpg
+*.jpeg
 
 # testing
 /coverage
 
 # production
 /build
+/dist
 
 # misc
 .DS_Store

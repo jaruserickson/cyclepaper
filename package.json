@@ -29,6 +29,7 @@
     "react-start": "BROWSER=none react-scripts start",
     "pack": "electron-builder --dir",
     "dist": "npm run build && electron-builder",
+    "dist-all": "npm run build && electron-builder -mwl",
     "postinstall": "install-app-deps"
   },
   "build": {
