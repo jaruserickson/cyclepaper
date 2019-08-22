@@ -3,7 +3,7 @@
 
 ![cyclepaper](public/screenshot0.7.1.png?raw=true "Title")
 
-cyclepaper is a multiplatform reddit wallpaper cyclist built with NodeJS on top of electron. experience variety.
+cyclepaper is a multiplatform reddit wallpaper cyclist built with NodeJS on top of electron & express. 
 ***
 
 If you're interested in following the development of *cyclepaper*, check out the [Kanban board.](https://github.com/jaruserickson/cyclepaper/projects/1)
@@ -17,6 +17,17 @@ If you're interested in following the development of *cyclepaper*, check out the
 ## Installation
 
 Head over to [releases][releases] to download the latest release for your operating system. 
+
+## Built With
+
+* [Node](https://nodejs.org)
+* [Electron](https://electronjs.org) - Native Application Framework
+* [Express](https://expressjs.com) - Node Server Framework
+* [React](https://reactjs.org
+) - Frontend Library
+* [Semantic UI](https://react.semantic-ui.com) - UI Components
+* [Tachyons](https://tachyons.io) - CSS Toolkit
+
 
 ## Support
 
