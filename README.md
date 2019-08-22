@@ -20,6 +20,7 @@ Note that cyclepaper will run on any platform officially supported by
 
 ## Installation
 
+Head over to [releases][releases] to download the latest release for your operating system. 
 
 ## Support
 
@@ -29,4 +30,6 @@ If you're having any problem, please [raise an issue][newissue] on GitHub and I'
 [electron]: https://electronjs.org/
 [electron-supported-platforms]: https://electronjs.org/docs/tutorial/support#supported-platforms
 [newissue]: https://github.com/jaruserickson/cyclepaper/issues/new
+[releases]: https://github.com/jaruserickson/cyclepaper/releases
+
 
