@@ -8,7 +8,6 @@ cyclepaper is a multiplatform reddit wallpaper cyclist built with NodeJS on top 
 
 If you're interested in following the development of *cyclepaper*, check out the [Kanban board.](https://github.com/jaruserickson/cyclepaper/projects/1)
 
-***
 ## Supported Operating Systems
 
 - Linux (most distros)
