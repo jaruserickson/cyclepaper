@@ -1,4 +1,4 @@
-const { app, Menu, Tray, BrowserWindow, nativeImage, systemPreferences } = require('electron');
+const { app, Menu, Tray, BrowserWindow, nativeImage } = require('electron');
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
@@ -44,7 +44,6 @@ serv.post('/', async function (req, res) {
         console.log(url + ' downloaded.')
         fs.writeFile(filepath, data, function () {
             wallpaper.set(filepath)
-            lastpath = filepath
             console.log('wallpaper set at ' + filepath + ' to ' + url)
             res.send('wallpaper set at ' + filepath + ' to ' + url)
         })
@@ -53,10 +52,19 @@ serv.post('/', async function (req, res) {
 
 
 app.on('ready', () => {
-    tray = new Tray(systemPreferences.isDarkMode() ? logoLight : logoDark)
+    let logoPicked = logo
+    if (process.platform === 'darwin') {
+        const { systemPreferences } = require('electron')
+        if (systemPreferences.isDarkMode()) {
+            logoPicked = logoLight
+        } else {
+            logoPicked = logoDark
+        }
+    }
+    tray = new Tray(logoPicked)
     const contextMenu = Menu.buildFromTemplate([
         { label: 'show cyclepaper', click: function(){
-            app.dock.show()
+            if (process.platform === 'darwin') app.dock.show()
             win.show()
         } },
         { label: 'quit', click: function(){
@@ -64,13 +72,16 @@ app.on('ready', () => {
             app.quit()
         } }
     ])
-    tray.setToolTip('This is my application.')
+    tray.setToolTip('cyclepaper')
     tray.setContextMenu(contextMenu)
     
-    systemPreferences.subscribeNotification(
-        'AppleInterfaceThemeChangedNotification',
-        onDarkThemeChange
-    )
+    if (process.platform === 'darwin') {
+        const { systemPreferences } = require('electron')
+        systemPreferences.subscribeNotification(
+            'AppleInterfaceThemeChangedNotification',
+            onDarkThemeChange
+        )
+    }
 
     serv.listen(8124, function () {
         console.log('wallpaper web server listening on port 8080')
@@ -110,7 +121,7 @@ app.on('ready', () => {
             } catch (TypeError) {
                 console.log('Server was already closed.')
             }
-            app.dock.hide()
+            if (process.platform === 'darwin') app.dock.hide()
             event.preventDefault()
             win.hide()
         }
