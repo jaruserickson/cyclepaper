@@ -11,7 +11,7 @@ If you're interested in following the development of *cyclepaper*, check out the
 ## Supported Operating Systems
 
 - Linux
-- macOS 10.12 (Yosemite) and later
+- macOS 10.12 (Sierra) and later
 - Microsoft Windows 10 and later
 
 ## Installation
