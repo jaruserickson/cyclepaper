@@ -9,7 +9,7 @@ const r = new snoowrap({
 })
 
 const setWallpaperToURL = (url) => {
-    axios.post('http://localhost:8080/', {url}).then((res) => console.log(res))
+    axios.post('http://localhost:8124/', {url}).then((res) => console.log(res))
 }
 
 const getImages = (sources) => new Promise((resolve, reject) => {

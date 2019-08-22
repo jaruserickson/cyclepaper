@@ -3,17 +3,17 @@
   "name": "reddit wallpaper cyclist",
   "icons": [
     {
-      "src": "logo.png",
+      "src": "../assets/logo.png",
       "type": "image/png",
       "sizes": "256x256"
     },
     {
-      "src": "logo-dark.png",
+      "src": "../assets/logo-dark.png",
       "type": "image/png",
       "sizes": "256x256"
     },
     {
-      "src": "logo-light.png",
+      "src": "../assets/logo-light.png",
       "type": "image/png",
       "sizes": "256x256"
     }
