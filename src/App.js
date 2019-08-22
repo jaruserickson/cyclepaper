@@ -45,7 +45,7 @@ class App extends React.Component {
                 <span className="f2-ns tracked-tight helvetica pa4">cyclepaper</span>
                 {
                     Object.keys(this.state.sources).map((subReddit) => 
-                        <div className="ma1">
+                        <div className="ma1" key={subReddit}>
                             <Button 
                             toggle
                             onClick={() => this.select(subReddit, () => this.handleTimeChange())} 

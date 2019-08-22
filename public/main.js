@@ -27,7 +27,7 @@ app.on('ready', () => {
     ])
     tray.setToolTip('This is my application.')
     tray.setContextMenu(contextMenu)
-
+    
     systemPreferences.subscribeNotification(
         'AppleInterfaceThemeChangedNotification',
         onDarkThemeChange
@@ -47,3 +47,4 @@ app.on('ready', () => {
 
     win.loadURL('http://localhost:3000/')
 });
+

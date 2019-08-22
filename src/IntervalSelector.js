@@ -6,7 +6,7 @@ const isValidTime = (time) => /\d/i.test(time) && time.length > 0
 export default function IntervalSelector({ setTime, setTimeUnit }) {
     const [displayTime, setDisplayTime] = useState('30')
     return (
-        <div className="flex align-center justify-center flex-column">
+        <div className="no-drag flex align-center justify-center flex-column">
             <span className="f6 tc ma2">refresh wallpaper every:</span>
             <div className="flex align-center justify-center flex-row">
                 <Input 
