@@ -57,13 +57,7 @@ serv.post('/save', (req, res) => {
     glob(userPath + '/*.{jpg,png,jpeg}', (er, files) => {
         files.map((file) => {
             const filePath = getSavedFilename(file)
-            fs.copyFile(file, filePath, (err) => {
-                if (err) {
-                    res.send('wallpaper could not be saved.')
-                } else {
-                    res.send('wallpaper saved to ' + filePath)
-                }
-            })
+            fs.copyFileSync(file, filePath)
         })
     })
 })
