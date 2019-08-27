@@ -93,7 +93,7 @@ class App extends React.Component {
                         onClick: () => this.addSubreddit(this.state.subRedditSet)
                     }}
                     placeholder='subreddit'
-                    className='mb2'
+                    className='mb2 no-drag'
                     onChange={({ target: { value }}) => this.setState({ subRedditSet: value})}
                     onKeyPress={(e) => {
                         if(e.key === 'Enter') this.addSubreddit(this.state.subRedditSet)
