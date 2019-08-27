@@ -17,7 +17,8 @@ const logo = nativeImage.createFromPath(__dirname + '/logo.png')
 
 const userPath = app.getPath('userData')
 
-function onDarkThemeChange () {
+const onDarkThemeChange = () => {
+    const { systemPreferences } = require('electron')
     if (systemPreferences.isDarkMode()) {
         tray.setImage(logoLight)
     } else {
@@ -31,21 +32,38 @@ serv.use(bodyParser.json())
 serv.use(cors())
 
 const cleanup = (dir) => {
-    glob(dir + '/*.{jpg,png,jpeg}', function (er, files) {
+    glob(dir + '/*.{jpg,png,jpeg}', (er, files) => {
         files.map((file) => { fs.unlinkSync(file) })
     })
 }
 
-serv.post('/', async function (req, res) {
+serv.post('/', (req, res) => {
     const url = req.body.url
     cleanup(userPath)
-    const filepath = userPath + '/' + Math.random() + '.' + url.split(/\.(?=[^\.]+$)/).pop()
+    const filePath = userPath + '/' + Math.random() + '.' + url.split(/\.(?=[^\.]+$)/).pop()
     download(url).then(data => {
         console.log(url + ' downloaded.')
-        fs.writeFile(filepath, data, function () {
-            wallpaper.set(filepath)
-            console.log('wallpaper set at ' + filepath + ' to ' + url)
-            res.send('wallpaper set at ' + filepath + ' to ' + url)
+        fs.writeFile(filePath, data, () => {
+            wallpaper.set(filePath)
+            console.log('wallpaper set at ' + filePath + ' to ' + url)
+            res.send('wallpaper set at ' + filePath + ' to ' + url)
+        })
+    })
+})
+
+serv.post('/save', (req, res) => {
+    const dateString = (Date.now() * Math.random()).toString()
+    const getSavedFilename = (file) => app.getPath('desktop') + '/cyclepaper_save_' + dateString.substr(dateString.length - 3) + '.' +  file.split('.').pop()
+    glob(userPath + '/*.{jpg,png,jpeg}', (er, files) => {
+        files.map((file) => {
+            const filePath = getSavedFilename(file)
+            fs.copyFile(file, filePath, (err) => {
+                if (err) {
+                    res.send('wallpaper could not be saved.')
+                } else {
+                    res.send('wallpaper saved to ' + filePath)
+                }
+            })
         })
     })
 })
@@ -63,11 +81,11 @@ app.on('ready', () => {
     }
     tray = new Tray(logoPicked)
     const contextMenu = Menu.buildFromTemplate([
-        { label: 'show cyclepaper', click: function(){
+        { label: 'show cyclepaper', click: () => {
             if (process.platform === 'darwin') app.dock.show()
             win.show()
         } },
-        { label: 'quit', click: function(){
+        { label: 'quit', click: () => {
             app.isQuitting = true
             app.quit()
         } }
@@ -83,7 +101,7 @@ app.on('ready', () => {
         )
     }
 
-    serv.listen(8124, function () {
+    serv.listen(8124, () => {
         console.log('wallpaper web server listening on port 8080')
     })
 
@@ -109,7 +127,7 @@ app.on('ready', () => {
     win = new BrowserWindow({ width: 800, height: 400, icon: logo, titleBarStyle: 'hiddenInset' })
     win.setMenu(null)
     win.on('minimize', (event) => {
-        event.preventdefault()
+        event.preventDefault()
         win.hide()
     })
     // win.webContents.openDevTools()
@@ -126,7 +144,7 @@ app.on('ready', () => {
             win.hide()
         }
     })
-
+    // win.loadURL('http://localhost:3000')
     win.loadURL(`file://${path.join(__dirname, '/../build/index.html')}`)
 })
 

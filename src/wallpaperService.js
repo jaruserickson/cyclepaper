@@ -24,8 +24,16 @@ const getImages = (sources) => new Promise((resolve, reject) => {
     })
 })
 
-export const setWallpaperFromSources = async (sources) => {
+export const setWallpaperFromSources = (sources) => {
     getImages(sources).then(images => {
-        setWallpaperToURL(images[Math.floor(Math.random() * images.length)].url)
+        const imageUrl = images[Math.floor(Math.random() * images.length)].url
+        setWallpaperToURL(imageUrl)
+        return imageUrl
     })
 }
+
+export const saveWallpaper = () => new Promise((res, rej) => {
+    axios.post('http://localhost:8124/save').then((result) => {
+        res(result.data)
+    })
+})

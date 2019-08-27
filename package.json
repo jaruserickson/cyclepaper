@@ -1,6 +1,6 @@
 {
   "name": "cyclepaper",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "private": true,
   "homepage": "./",
   "main": "public/electron.js",
@@ -40,6 +40,10 @@
     ],
     "mac": {
       "category": "wallpaper.cyclist"
+    },
+    "nsis": {
+      "license": "LICENSE",
+      "runAfterFinish": true
     },
     "directories": {
       "buildResources": "assets"
