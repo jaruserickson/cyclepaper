@@ -2,12 +2,11 @@ const { app, Menu, Tray, BrowserWindow, nativeImage } = require('electron');
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
-const fs = require('fs')
 const path = require('path')
+const fs = require('fs')
 const glob = require('glob')
 const wallpaper = require('wallpaper')
-const download = require('download');
-
+const download = require('download')
 let win = null;
 let tray = null;
 
@@ -62,6 +61,30 @@ serv.post('/save', (req, res) => {
     })
 })
 
+const settingsPath = userPath + '/data.json'
+
+serv.get('/settings', (req, res) => {
+    if (fs.existsSync(settingsPath)) {
+        res.send(fs.readFileSync(settingsPath, 'utf8'))
+    } else {
+        res.sendStatus(204) // No content
+    }
+})
+
+serv.post('/settings', (req, res) => {
+    const state = req.body.state
+    fs.writeFileSync(settingsPath, JSON.stringify(state), 'utf-8')
+})
+
+app.requestSingleInstanceLock()
+app.on('second-instance', (event, argv, cwd) => {
+    if (win) {
+        if (win.isMinimized()) {
+            win.restore()
+        }
+        win.focus()
+    }
+})
 
 app.on('ready', () => {
     let logoPicked = logo

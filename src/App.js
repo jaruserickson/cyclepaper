@@ -2,9 +2,9 @@ import React from 'react'
 import { Button, Segment, Input, Icon } from 'semantic-ui-react'
 import IntervalSelector from './IntervalSelector'
 import { setWallpaperFromSources, saveWallpaper } from './wallpaperService'
+import axios from 'axios';
 
-
-class App extends React.Component {
+export default class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -19,6 +19,20 @@ class App extends React.Component {
         }
     }
 
+    componentDidMount() {
+        axios.get('http://localhost:8124/settings').then((res) => {
+            if (res.status === 200) {
+                this.setState(res.data)
+            } else {
+                console.log('No settings found, keeping defaults.')
+            }
+        })
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        axios.post('http://localhost:8124/settings', { state: this.state }).then((res) => console.log(res))
+    }
+    
     select = (subReddit) => {
         const copySources = {...this.state.sources}
         copySources[subReddit] = !this.state.sources[subReddit]
@@ -121,5 +135,3 @@ class App extends React.Component {
         );
     }
 }
-
-export default App;
