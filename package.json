@@ -25,7 +25,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron": "electron .",
-    "electron-start": "node src/start-react",
+    "electron-start": "node start-react",
     "react-start": "BROWSER=none react-scripts start",
     "pack": "electron-builder --dir",
     "dist": "npm run build && electron-builder",
