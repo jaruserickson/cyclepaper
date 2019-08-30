@@ -1,5 +1,5 @@
-import snoowrap from 'snoowrap'
-import axios from 'axios'
+const snoowrap = require('snoowrap')
+const axios = require('axios')
 
 const r = new snoowrap({
     userAgent: 'wallpaper cyclist by /u/jakeroooo',
@@ -24,7 +24,7 @@ const getImages = (sources) => new Promise((resolve, reject) => {
     })
 })
 
-export const setWallpaperFromSources = (sources) => {
+module.exports.setWallpaperFromSources = (sources) => {
     getImages(sources).then(images => {
         const imageUrl = images[Math.floor(Math.random() * images.length)].url
         setWallpaperToURL(imageUrl)
@@ -32,7 +32,7 @@ export const setWallpaperFromSources = (sources) => {
     })
 }
 
-export const saveWallpaper = () => new Promise((res, rej) => {
+module.exports.saveWallpaper = () => new Promise((res, rej) => {
     axios.post('http://localhost:8124/save').then((result) => {
         res(result.data)
     })

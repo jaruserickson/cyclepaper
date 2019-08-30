@@ -1,5 +1,7 @@
 const { app, Menu, Tray, BrowserWindow, nativeImage } = require('electron');
+const fs = require('fs')
 const server = require('../src/service/serverService')
+const { setWallpaperFromSources, saveWallpaper } = require('../src/service/wallpaperService')
 
 let win = null
 let tray = null
@@ -46,6 +48,15 @@ app.on('ready', () => {
 
     // Set up the tray's menu
     const contextMenu = Menu.buildFromTemplate([
+        { label: 'refresh', click: () => {
+            // Read stashed settings for assumed sources
+            fs.readFile(`${userPath}/data.json`, 'utf8', (err, data) => {
+                if (err) console.log(err)
+                const state = JSON.parse(data)
+                setWallpaperFromSources(Object.keys(state.sources))
+            })
+        } },
+        { label: 'save', click: () => { saveWallpaper() } },
         { label: 'show cyclepaper', click: () => {
             if (process.platform === 'darwin') app.dock.show()
             win.show()

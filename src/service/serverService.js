@@ -18,10 +18,12 @@ module.exports.startServerWithEndpoints = (app, userPath) => {
 
     serv.use(bodyParser.json())
     serv.use(cors())
+
     serv.post('/', (req, res) => {
         const url = req.body.url
         cleanup(userPath)
         const filePath = userPath + '/' + Math.random() + '.' + url.split(/\.(?=[^\.]+$)/).pop()
+        
         download(url).then(data => {
             console.log(url + ' downloaded.')
             fs.writeFile(filePath, data, () => {
@@ -35,6 +37,7 @@ module.exports.startServerWithEndpoints = (app, userPath) => {
     serv.post('/save', (req, res) => {
         const dateString = (Date.now() * Math.random()).toString()
         const getSavedFilename = (file) => app.getPath('desktop') + '/cyclepaper_save_' + dateString.substr(dateString.length - 3) + '.' +  file.split('.').pop()
+        
         glob(userPath + '/*.{jpg,png,jpeg}', (er, files) => {
             files.map((file) => {
                 const filePath = getSavedFilename(file)
@@ -43,7 +46,7 @@ module.exports.startServerWithEndpoints = (app, userPath) => {
         })
     })
 
-    const settingsPath = userPath + '/data.json'
+    const settingsPath = `${userPath}/data.json`
 
     serv.get('/settings', (req, res) => {
         if (fs.existsSync(settingsPath)) {
