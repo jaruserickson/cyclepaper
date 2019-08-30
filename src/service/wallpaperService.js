@@ -30,7 +30,7 @@ const getImages = (sources) => new Promise((resolve, reject) => {
 module.exports.validateSubreddit = (sub) => new Promise((resolve, reject) => {
     r.getSubreddit(sub).search({'query': 'test', 'sort': 'year'})
         .then(() => { resolve('Subreddit exists.') })
-        .catch((err) => { reject(err) })
+        .catch((err) => { reject('Subreddit does not exist.') })
 })
 
 module.exports.setWallpaperFromSources = (sources) => new Promise((resolve, reject) => {

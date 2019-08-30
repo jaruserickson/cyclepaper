@@ -107,7 +107,7 @@ app.on('ready', () => {
         event.preventDefault()
         win.hide()
     })
-    win.webContents.openDevTools()
+    // win.webContents.openDevTools()
     win.on('close', (event) => {
         console.log(event)
         if (!app.isQuitting) {

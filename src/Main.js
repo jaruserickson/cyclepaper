@@ -28,7 +28,9 @@ export default class App extends React.Component {
             timeUnit: 'mins',
             subRedditSet: '',
             error: false,
-            loading: false
+            loading: false,
+            trashVisible: false,
+            toggleAnimation: true
         }
     }
 
@@ -47,7 +49,13 @@ export default class App extends React.Component {
             !statesMatch(prevState.currentWallpaper, this.state.currentWallpaper) ||
             !statesMatch(prevState.time, this.state.time) ||
             !statesMatch(prevState.timeUnit, this.state.timeUnit)) {
-            axios.post('http://localhost:8124/settings', { state: this.state }).then((res) => console.log(res))
+            const copyState = {...this.state}
+            copyState.subRedditSet = ''
+            copyState.error = false
+            copyState.loading = false
+            copyState.trashVisible = false
+
+            axios.post('http://localhost:8124/settings', { state: copyState }).then((res) => console.log(res))
         }
     }
 
@@ -78,13 +86,13 @@ export default class App extends React.Component {
                 const copySources = {...this.state.sources}
                 copySources[sub] = true
                 this.setState({ sources: copySources })
-            }).catch(() => {
+            }).catch((err) => {
                 this.setState({ error: true }, () => {
                     setTimeout(() => {
                         this.setState({ error: false })
                     }, 2000)
                 })
-                console.log('Subreddit does not exist.')
+                console.log(err)
             })
         }
     }
@@ -102,6 +110,7 @@ export default class App extends React.Component {
     }
   
     render() {
+        console.log(this.state)
         return (
             <div className="bg-near-black white vw-100 vh-100 flex flex-column items-center justify-center">
                 <span className="f2-ns tracked-tight helvetica pa3">cyclepaper</span>
@@ -109,6 +118,8 @@ export default class App extends React.Component {
                     sources={this.state.sources}
                     selectSubreddit={(subReddit) => this.selectSubreddit(subReddit)}
                     deleteSubreddit={(subReddit) => this.deleteSubreddit(subReddit)}
+                    toggleAnimation={this.state.toggleAnimation}
+                    trashVisible={this.state.trashVisible}
                 />
                 <SubredditInput 
                     submit={() => this.addSubreddit(this.state.subRedditSet)}
@@ -121,10 +132,28 @@ export default class App extends React.Component {
                 <WallpaperFunctionButtons 
                     refreshWallpaper={this.handleTimeChange}
                     saveWallpaper={saveWallpaper}
+                    toggleTrash={() => {
+                        if (this.state.trashVisible) {
+                            this.setState({ toggleAnimation: false, trashVisible: false}, () => {
+                                setTimeout(() => this.setState({ toggleAnimation: true }), 500)
+                            })
+                        } else {
+                            this.setState({ toggleAnimation: false }, () => {
+                                setTimeout(() => this.setState({ trashVisible: true }), 500)
+                                setTimeout(() => this.setState({ toggleAnimation: true }), 500)
+                            })
+                        }
+                    }}
                 />
-                <a href={this.state.currentWallpaper.url} target="_blank" rel="noopener noreferrer" className="absolute bottom-2 left-2 gray">{this.state.currentWallpaper.sub}</a>
+                <a 
+                    href={this.state.currentWallpaper.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="absolute bottom-2 left-2 gray">
+                    {this.state.currentWallpaper.sub}
+                </a>
                 <div className="absolute bottom-1">
-                    <Transition visible={this.state.error} animation='scale' duration={500}>
+                    <Transition visible={this.state.error} animation='fade up' duration={500}>
                         <Message
                             error
                             header="That subreddit doesn't exist!"

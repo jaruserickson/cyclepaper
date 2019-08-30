@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Icon } from 'semantic-ui-react'
 
 
-const WallpaperFunctionButtons = ({ refreshWallpaper, saveWallpaper }) => (
+const WallpaperFunctionButtons = ({ refreshWallpaper, saveWallpaper, toggleTrash }) => (
     <div className='absolute right-2 bottom-2'>
         <Button.Group>
             <Button
@@ -16,6 +16,12 @@ const WallpaperFunctionButtons = ({ refreshWallpaper, saveWallpaper }) => (
                 <Icon name='save'></Icon>
             </Button>
         </Button.Group>
+        <Button
+            icon
+            onClick={toggleTrash}
+            style={{margin:5}}>
+            <Icon name='trash'></Icon>
+        </Button>
     </div>
 )
 
