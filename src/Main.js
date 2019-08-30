@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios';
-import { Message, Transition } from 'semantic-ui-react'
+import { Message, Transition, Loader } from 'semantic-ui-react'
 import { 
     setWallpaperFromSources, 
     saveWallpaper, 
@@ -12,6 +12,8 @@ import SubredditPicker from './components/SubredditPicker'
 import SubredditInput from './components/SubredditInput'
 
 
+const statesMatch = (obj1, obj2) => JSON.stringify(obj1) === JSON.stringify(obj2)
+
 export default class App extends React.Component {
     constructor(props) {
         super(props)
@@ -21,10 +23,12 @@ export default class App extends React.Component {
                 'wallpaper': false,
                 'multiwall': false
             },
+            currentWallpaper: '',
             time: 30,
             timeUnit: 'mins',
             subRedditSet: '',
-            error: false
+            error: false,
+            loading: false
         }
     }
 
@@ -39,11 +43,14 @@ export default class App extends React.Component {
     }
 
     componentDidUpdate(p, prevState) {
-        if (JSON.stringify(prevState.sources) !== JSON.stringify(this.state.sources)) {
+        if (!statesMatch(prevState.sources, this.state.sources) ||
+            !statesMatch(prevState.currentWallpaper, this.state.currentWallpaper) ||
+            !statesMatch(prevState.time, this.state.time) ||
+            !statesMatch(prevState.timeUnit, this.state.timeUnit)) {
             axios.post('http://localhost:8124/settings', { state: this.state }).then((res) => console.log(res))
         }
     }
-    
+
     getTimeMultiplier = () => {
         return this.state.timeUnit === 'mins' ? 60000 : 
                 this.state.timeUnit === 'hrs' ? 3.6e+6 : 8.64e+7 // days
@@ -52,10 +59,16 @@ export default class App extends React.Component {
     handleTimeChange = () => {
         window.clearInterval(this.interval)
         let filteredSources = Object.keys(this.state.sources).filter((item) => this.state.sources[item])
-        setWallpaperFromSources(filteredSources)
+        this.setState({ loading: true })
+        setWallpaperFromSources(filteredSources).then((cur) => {
+            this.setState({ loading: false, currentWallpaper: cur, })
+        })
         
-        this.interval = setInterval(() => {
-            setWallpaperFromSources(filteredSources)
+        this.interval = setInterval(async () => {
+            this.setState({ loading: true })
+            setWallpaperFromSources(filteredSources).then((cur) => {
+                this.setState({ loading: false, currentWallpaper: cur, })
+            })
         }, this.state.time * this.getTimeMultiplier())
     }
 
@@ -109,6 +122,7 @@ export default class App extends React.Component {
                     refreshWallpaper={this.handleTimeChange}
                     saveWallpaper={saveWallpaper}
                 />
+                <a href={this.state.currentWallpaper.url} target="_blank" rel="noopener noreferrer" className="absolute bottom-2 left-2 gray">{this.state.currentWallpaper.sub}</a>
                 <div className="absolute bottom-1">
                     <Transition visible={this.state.error} animation='scale' duration={500}>
                         <Message
@@ -116,6 +130,9 @@ export default class App extends React.Component {
                             header="That subreddit doesn't exist!"
                         />
                     </Transition>
+                </div>
+                <div className="absolute top-2 right-2">
+                    <Loader active={this.state.loading}/>
                 </div>
             </div>
         );

@@ -101,7 +101,7 @@ app.on('ready', () => {
     const serv = server.startServerWithEndpoints(app, userPath)
 
     // Window settings
-    win = new BrowserWindow({ width: 800, height: 400, icon: logo, titleBarStyle: 'hiddenInset' })
+    win = new BrowserWindow({ width: 800, height: 500, icon: logo, titleBarStyle: 'hiddenInset' })
     win.setMenu(null)
     win.on('minimize', (event) => {
         event.preventDefault()

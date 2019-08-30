@@ -8,10 +8,13 @@ const r = new snoowrap({
     refreshToken: process.env.REACT_APP_REFRESH_TOKEN
 })
 
-const setWallpaperToURL = (url) => {
-    axios.post('http://localhost:8124/', {url}).then((res) => console.log(res))
-}
-
+const setWallpaperToURL = (url) => new Promise((resolve, reject) => {
+    axios.post('http://localhost:8124/', {url}).then((res) => {
+        console.log(res)
+        resolve(res)
+    }).catch((err) => reject(err))
+})
+    
 const getImages = (sources) => new Promise((resolve, reject) => {
     let images = []
     sources.map((source, index) => {
@@ -30,13 +33,17 @@ module.exports.validateSubreddit = (sub) => new Promise((resolve, reject) => {
         .catch((err) => { reject(err) })
 })
 
-module.exports.setWallpaperFromSources = (sources) => {
+module.exports.setWallpaperFromSources = (sources) => new Promise((resolve, reject) => {
     getImages(sources).then(images => {
-        const imageUrl = images[Math.floor(Math.random() * images.length)].url
-        setWallpaperToURL(imageUrl)
-        return imageUrl
+        const image = images[Math.floor(Math.random() * images.length)]
+        setWallpaperToURL(image.url).then(() => {
+            resolve({
+                sub: image.permalink.split('/')[2],
+                url: `https://reddit.com${image.permalink}`
+            })
+        }).catch((err) => reject(err)) 
     })
-}
+})
 
 module.exports.saveWallpaper = () => new Promise((res, rej) => {
     axios.post('http://localhost:8124/save').then((result) => {

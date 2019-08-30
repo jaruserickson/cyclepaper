@@ -26,8 +26,8 @@ module.exports.startServerWithEndpoints = (app, userPath) => {
         
         download(url).then(data => {
             console.log(url + ' downloaded.')
-            fs.writeFile(filePath, data, () => {
-                wallpaper.set(filePath)
+            fs.writeFile(filePath, data, async () => {
+                await wallpaper.set(filePath)
                 console.log('wallpaper set at ' + filePath + ' to ' + url)
                 res.send('wallpaper set at ' + filePath + ' to ' + url)
             })
