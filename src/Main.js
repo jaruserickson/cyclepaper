@@ -30,7 +30,7 @@ export default class App extends React.Component {
             error: false,
             loading: false,
             trashVisible: false,
-            toggleAnimation: true
+            subVisible: true
         }
     }
 
@@ -54,6 +54,7 @@ export default class App extends React.Component {
             copyState.error = false
             copyState.loading = false
             copyState.trashVisible = false
+            copyState.subVisible = true
 
             axios.post('http://localhost:8124/settings', { state: copyState }).then((res) => console.log(res))
         }
@@ -85,7 +86,12 @@ export default class App extends React.Component {
             validateSubreddit(sub).then((res) => {
                 const copySources = {...this.state.sources}
                 copySources[sub] = true
-                this.setState({ sources: copySources })
+
+                this.setState({ trashVisible: false, subVisible: false })
+                setTimeout(
+                    () => this.setState({ sources: copySources, subVisible: true }),
+                    500
+                )
             }).catch((err) => {
                 this.setState({ error: true }, () => {
                     setTimeout(() => {
@@ -106,7 +112,12 @@ export default class App extends React.Component {
     deleteSubreddit = (sub) => {
         let copySources = {...this.state.sources}
         delete copySources[sub]
-        this.setState({ sources: copySources })
+
+        this.setState({ trashVisible: false, subVisible: false })
+        setTimeout(
+            () => this.setState({ sources: copySources, trashVisible: true, subVisible: true }),
+            500
+        )
     }
   
     render() {
@@ -118,7 +129,7 @@ export default class App extends React.Component {
                     sources={this.state.sources}
                     selectSubreddit={(subReddit) => this.selectSubreddit(subReddit)}
                     deleteSubreddit={(subReddit) => this.deleteSubreddit(subReddit)}
-                    toggleAnimation={this.state.toggleAnimation}
+                    subVisible={this.state.subVisible}
                     trashVisible={this.state.trashVisible}
                 />
                 <SubredditInput 
@@ -134,13 +145,13 @@ export default class App extends React.Component {
                     saveWallpaper={saveWallpaper}
                     toggleTrash={() => {
                         if (this.state.trashVisible) {
-                            this.setState({ toggleAnimation: false, trashVisible: false}, () => {
-                                setTimeout(() => this.setState({ toggleAnimation: true }), 500)
+                            this.setState({ subVisible: false, trashVisible: false}, () => {
+                                setTimeout(() => this.setState({ subVisible: true }), 500)
                             })
                         } else {
-                            this.setState({ toggleAnimation: false }, () => {
+                            this.setState({ subVisible: false }, () => {
                                 setTimeout(() => this.setState({ trashVisible: true }), 500)
-                                setTimeout(() => this.setState({ toggleAnimation: true }), 500)
+                                setTimeout(() => this.setState({ subVisible: true }), 500)
                             })
                         }
                     }}

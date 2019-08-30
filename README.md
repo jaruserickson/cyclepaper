@@ -1,7 +1,7 @@
 # cyclepaper 
 > :bicyclist: cycle your desktop wallpaper through your favourite subreddit's top posts.
 
-![cyclepaper](public/screenshot0.9.0.png?raw=true "Title")
+![cyclepaper](public/screenshot0.9.1.png?raw=true "Title")
 
 cyclepaper is a multiplatform reddit wallpaper cyclist built with NodeJS on top of electron & express. 
 ***
