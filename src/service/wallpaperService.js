@@ -24,6 +24,12 @@ const getImages = (sources) => new Promise((resolve, reject) => {
     })
 })
 
+module.exports.validateSubreddit = (sub) => new Promise((resolve, reject) => {
+    r.getSubreddit(sub).search({'query': 'test', 'sort': 'year'})
+        .then(() => { resolve('Subreddit exists.') })
+        .catch((err) => { reject(err) })
+})
+
 module.exports.setWallpaperFromSources = (sources) => {
     getImages(sources).then(images => {
         const imageUrl = images[Math.floor(Math.random() * images.length)].url

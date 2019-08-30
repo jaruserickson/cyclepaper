@@ -1,6 +1,11 @@
 import React from 'react'
 import axios from 'axios';
-import { setWallpaperFromSources, saveWallpaper } from './service/wallpaperService'
+import { Message, Transition } from 'semantic-ui-react'
+import { 
+    setWallpaperFromSources, 
+    saveWallpaper, 
+    validateSubreddit 
+} from './service/wallpaperService'
 import IntervalSelector from './components/IntervalSelector'
 import WallpaperFunctionButtons from './components/WallpaperFunctionButtons';
 import SubredditPicker from './components/SubredditPicker'
@@ -18,7 +23,8 @@ export default class App extends React.Component {
             },
             time: 30,
             timeUnit: 'mins',
-            subRedditSet: ''
+            subRedditSet: '',
+            error: false
         }
     }
 
@@ -55,9 +61,18 @@ export default class App extends React.Component {
 
     addSubreddit = (sub) => {
         if (sub.length > 2) {
-            const copySources = {...this.state.sources}
-            copySources[sub] = true
-            this.setState({ sources: copySources })
+            validateSubreddit(sub).then((res) => {
+                const copySources = {...this.state.sources}
+                copySources[sub] = true
+                this.setState({ sources: copySources })
+            }).catch(() => {
+                this.setState({ error: true }, () => {
+                    setTimeout(() => {
+                        this.setState({ error: false })
+                    }, 2000)
+                })
+                console.log('Subreddit does not exist.')
+            })
         }
     }
 
@@ -94,6 +109,14 @@ export default class App extends React.Component {
                     refreshWallpaper={this.handleTimeChange}
                     saveWallpaper={saveWallpaper}
                 />
+                <div className="absolute bottom-1">
+                    <Transition visible={this.state.error} animation='scale' duration={500}>
+                        <Message
+                            error
+                            header="That subreddit doesn't exist!"
+                        />
+                    </Transition>
+                </div>
             </div>
         );
     }
