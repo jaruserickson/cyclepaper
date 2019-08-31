@@ -1,6 +1,6 @@
 const { app, Menu, Tray, BrowserWindow, nativeImage } = require('electron');
 const fs = require('fs')
-const server = require('../src/service/serverService')
+const server = require('./serverService')
 const { setWallpaperFromSources, saveWallpaper } = require('../src/service/wallpaperService')
 
 let win = null
@@ -122,7 +122,7 @@ app.on('ready', () => {
         }
     })
 
-    win.loadURL('http://localhost:3000')
-    // win.loadURL(`file://${require('path').join(__dirname, '/../build/index.html')}`)
+    // win.loadURL('http://localhost:3000')
+    win.loadURL(`file://${require('path').join(__dirname, '/../build/index.html')}`)
 })
 
