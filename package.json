@@ -36,6 +36,7 @@
     "appId": "cyclepaper",
     "files": [
       "build/**/*",
+      "src/service/*",
       "node_modules/**/*"
     ],
     "mac": {
