@@ -1,6 +1,7 @@
 const { app, Menu, Tray, BrowserWindow, nativeImage } = require('electron');
 const fs = require('fs')
-const server = require('./serverService')
+const isDev = require('electron-is-dev')
+const server = require('../src/service/serverService')
 const { setWallpaperFromSources, saveWallpaper } = require('../src/service/wallpaperService')
 
 let win = null
@@ -107,7 +108,7 @@ app.on('ready', () => {
         event.preventDefault()
         win.hide()
     })
-    // win.webContents.openDevTools()
+    isDev && win.webContents.openDevTools()
     win.on('close', (event) => {
         console.log(event)
         if (!app.isQuitting) {
@@ -122,7 +123,10 @@ app.on('ready', () => {
         }
     })
 
-    // win.loadURL('http://localhost:3000')
-    win.loadURL(`file://${require('path').join(__dirname, '/../build/index.html')}`)
+    if (isDev) {
+        win.loadURL('http://localhost:3000')
+    } else {
+        win.loadURL(`file://${require('path').join(__dirname, '/../build/index.html')}`)
+    }
 })
 
