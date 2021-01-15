@@ -8,16 +8,16 @@
     "axios": "^0.21.1",
     "cors": "^2.8.5",
     "download": "^7.1.0",
-    "electron-is-dev": "^1.1.0",
+    "electron-is-dev": "^1.2.0",
     "express": "^4.17.1",
-    "glob": "^7.1.4",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
+    "glob": "^7.1.6",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react-scripts": "3.1.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.87.3",
-    "snoowrap": "^1.19.0",
-    "wallpaper": "^4.4.1"
+    "snoowrap": "^1.22.0",
+    "wallpaper": "^4.4.2"
   },
   "scripts": {
     "start": "nf start -p 3000",
@@ -55,10 +55,10 @@
   },
   "browserslist": "electron 1.6",
   "devDependencies": {
-    "electron": "^7.2.4",
+    "electron": "^7.3.3",
     "electron-builder": "^21.2.0",
     "foreman": "^3.0.1",
-    "node": "^12.8.1",
-    "webpack": "^4.39.1"
+    "node": "^12.20.0",
+    "webpack": "^4.46.0"
   }
 }
