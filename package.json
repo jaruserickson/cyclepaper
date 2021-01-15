@@ -55,7 +55,7 @@
   },
   "browserslist": "electron 1.6",
   "devDependencies": {
-    "electron": "^6.0.3",
+    "electron": "^7.2.4",
     "electron-builder": "^21.2.0",
     "foreman": "^3.0.1",
     "node": "^12.8.1",
